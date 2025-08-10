@@ -31,6 +31,7 @@ if ingredients_list:
         query_chosen_fruit = f"select search_on from smoothies.public.fruit_options where fruit_name = '{fruit_chosen}'"
         st.write(query_chosen_fruit)
         fruit_chosen = session.sql(query_chosen_fruit).collect()
+        st.write(fruit_chosen)
         ingredients_string += fruit_chosen + ' '
         st.subheader(fruit_chosen + ' Nutrition Information')
         smoothiefroot_response = requests.get("https://my.smoothiefroot.com/api/fruit/" + fruit_chosen)
