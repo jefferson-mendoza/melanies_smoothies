@@ -29,6 +29,7 @@ if ingredients_list:
 
     for fruit_chosen in ingredients_list:
         query_chosen_fruit = f"select search_on from smoothies.public.fruit_options where fruit_name = {fruit_chosen}"
+        st.write(query_chosen_fruit)
         fruit_chosen = session.sql(query_chosen_fruit).collect()
         ingredients_string += fruit_chosen + ' '
         st.subheader(fruit_chosen + ' Nutrition Information')
