@@ -71,14 +71,12 @@ if ingredients_list:
     ingredients_string = ''
 
     for fruit_chosen in ingredients_list:
-        query_chosen_fruit = f"select search_on from smoothies.public.fruit_options where fruit_name = '{fruit_chosen}'"
-        st.write(query_chosen_fruit)
-        fruit_chosen = session.sql(query_chosen_fruit).collect()
-        fruit_chosen_col = fruit_chosen[0]
-        str_fruit_chosen = fruit_chosen_col[0]
-        st.write(str_fruit_chosen)
-        ingredients_string += str_fruit_chosen + ' '
-        st.subheader(str_fruit_chosen + ' Nutrition Information')
+        ingredients_list += fruit_chosen + ' '
+      
+        search_on=pd_df.loc[pd_df['FRUIT_NAME'] == fruit_chosen, 'SEARCH_ON'].iloc[0]
+        st.write('The search value for ', fruit_chosen,' is ', search_on, '.')
+      
+        st.subheader(fruit_chosen + ' Nutrition Information')
         smoothiefroot_response = requests.get("https://my.smoothiefroot.com/api/fruit/" + str_fruit_chosen)
         sf_df = st.dataframe(data=smoothiefroot_response.json(), use_container_width=True)
 
