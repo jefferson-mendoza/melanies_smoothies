@@ -31,7 +31,8 @@ if ingredients_list:
         query_chosen_fruit = f"select search_on from smoothies.public.fruit_options where fruit_name = '{fruit_chosen}'"
         st.write(query_chosen_fruit)
         fruit_chosen = session.sql(query_chosen_fruit).collect()
-        str_fruit_chosen = fruit_chosen[0]
+        fruit_chosen_col = fruit_chosen[0]
+        str_fruit_chosen = fruit_chosen_col[0]
         st.write(str_fruit_chosen)
         ingredients_string += str_fruit_chosen + ' '
         st.subheader(fruit_chosen + ' Nutrition Information')
