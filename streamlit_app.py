@@ -71,25 +71,15 @@ if ingredients_list:
     ingredients_string = ''
 
     for fruit_chosen in ingredients_list:
-        ingredients_list += fruit_chosen + ' '
+        ingredients_string += fruit_chosen + ' '
       
-        # Normalize both sides for safer matching
-        matches = pd_df.loc[
-            pd_df['FRUIT_NAME'].str.strip().str.lower() == fruit_chosen.strip().lower(),
-            'SEARCH_ON'
-        ]
-        
-        if not matches.empty:
-            search_on = matches.iloc[0]
-            st.write(f"The search value for {fruit_chosen} is {search_on}.")
-        else:
-            st.error(f"No SEARCH_ON value found for {fruit_chosen}. Please check your dataset.")
-            continue  # Skip to next fruit if nothing found
-      
-        st.subheader(fruit_chosen + ' Nutrition Information')
-        smoothiefroot_response = requests.get("https://my.smoothiefroot.com/api/fruit/" + search_on)
-        sf_df = st.dataframe(data=smoothiefroot_response.json(), use_container_width=True)
+        search_on = pd_df.loc[pd_df['FRUIT_NAME'] == fruit_chosen, 'SEARCH_ON'].iloc[0]
+        st.write(f'The search value for {fruit_chosen} is {search_on}.')
 
+        st.subheader(f'{fruit_chosen} Nutrition Information')
+        smoothiefroot_response = requests.get("https://my.smoothiefroot.com/api/fruit/" + search_on)
+        st.dataframe(data=smoothiefroot_response.json(), use_container_width=True)
+    
     st.write(ingredients_string)
   
     my_insert_stmt = """ insert into smoothies.public.orders(ingredients, name_on_order)
